@@ -328,7 +328,7 @@
 <body>
   
   <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <a href="index.html">Home</a>
     <a href="food-info.html">Food Info</a>
     <a href="about.html">About</a>
@@ -340,7 +340,8 @@
 
   <div id="main-content">
     <div class="logo-container">
-      <img src="images/Cafe De Lune.jpg" alt="Café de Lune Logo">
+      <!-- Modified: Removed "images/" prefix -->
+      <img src="Cafe De Lune.jpg" alt="Café de Lune Logo"> 
     </div>
     <header>
       <h1>Photo Gallery</h1>
@@ -351,24 +352,27 @@
        <div class="slider-track" id="slider-track">
         <div class="slide">
           <div class="image-wrapper">
-            <a href="images/Exterior.png" data-lightbox="cafe-gallery" data-title="Cafe Exterior">
-              <img src="images/Exterior.png" alt="Cafe Exterior">
+            <!-- Modified: Removed "images/" prefix -->
+            <a href="Exterior.png" data-lightbox="cafe-gallery" data-title="Cafe Exterior">
+              <img src="Exterior.png" alt="Cafe Exterior">
             </a>
             <div class="caption-overlay">Cafe Exterior</div>
           </div>
         </div>
         <div class="slide">
           <div class="image-wrapper">
-            <a href="images/Interior.png" data-lightbox="cafe-gallery" data-title="Cafe Interior">
-              <img src="images/Interior.png" alt="Cafe Interior">
+            <!-- Modified: Removed "images/" prefix -->
+            <a href="Interior.png" data-lightbox="cafe-gallery" data-title="Cafe Interior">
+              <img src="Interior.png" alt="Cafe Interior">
             </a>
             <div class="caption-overlay">Cafe Interior</div>
           </div>
         </div>
         <div class="slide">
           <div class="image-wrapper">
-            <a href="images/BTS.png" data-lightbox="cafe-gallery" data-title="Barista at Work">
-              <img src="images/BTS.png" alt="Barista at Work">
+            <!-- Modified: Removed "images/" prefix -->
+            <a href="BTS.png" data-lightbox="cafe-gallery" data-title="Barista at Work">
+              <img src="BTS.png" alt="Barista at Work">
             </a>
             <div class="caption-overlay">Behind the Scenes</div>
           </div>
@@ -376,8 +380,8 @@
       </div>
 
         <div class="slider-controls">
-          <button onclick="prevSlide()">&#10094;</button>
-          <button onclick="nextSlide()">&#10095;</button>
+          <button onclick="prevSlide()">❮</button>
+          <button onclick="nextSlide()">❯</button>
         </div>
         <div class="slider-dots" id="slider-dots"></div>
       </section>
@@ -393,7 +397,8 @@
       <div class="footer-container">
         <div class="footer-column">
           <div class="footer-logo">
-            <img src="images/Cafe De Lune.jpg" alt="Café de Lune Logo">
+            <!-- Modified: Removed "images/" prefix -->
+            <img src="Cafe De Lune.jpg" alt="Café de Lune Logo"> 
           </div>
           <div class="social-icons">
             <a href="https://instagram.com/cafedelune" target="_blank" aria-label="Instagram">
@@ -410,6 +415,7 @@
         <div class="footer-column">
           <h4>Quick Links</h4>
           <ul>
+            <!-- Modified: Ensured links are relative -->
             <li><a href="index.html">Home</a></li>
             <li><a href="food-info.html">Food Info</a></li>
             <li><a href="about.html">About Us</a></li>
@@ -427,7 +433,7 @@
         </div>
       </div>
       <div class="footer-copyright">
-        &copy; <span id="copyright-year"></span> Café de Lune. All Rights Reserved.
+        © <span id="copyright-year"></span> Café de Lune. All Rights Reserved.
       </div>
     </footer>
   </div>
