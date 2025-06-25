@@ -1,0 +1,494 @@
+<!-- gallery.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gallery - Café de Lune</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --bg-dark-light: #1a1a1a;
+      --text-light: #f5f5f5;
+      --accent-gold: #d4af37;
+      --border-color: #333;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        background-color: rgba(10, 10, 10, 0.98);
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        text-align: center;
+    }
+    .sidenav a {
+        padding: 15px 8px 15px 32px;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-family: 'Montserrat', sans-serif;
+        color: var(--text-muted);
+        display: block;
+        transition: 0.3s;
+    }
+    .sidenav a:hover, .sidenav a.active {
+        color: var(--accent-gold);
+    }
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+    #main-content {
+        transition: margin-left .5s, opacity .5s;
+    }
+    .hamburger {
+        font-size: 2.5rem;
+        cursor: pointer;
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 1001;
+        color: var(--accent-gold);
+        background: none;
+        border: none;
+        transition: color 0.3s;
+    }
+    .hamburger:hover {
+        color: white;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem 0;
+      background-color: #0a0a0a;
+    }
+    .logo-container img {
+      width: 220px;
+      height: auto;
+      filter: drop-shadow(0 0 4px var(--accent-gold));
+      border-radius: 15px;
+    }
+
+    header {
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--text-light);
+      font-size: 2.2rem;
+      text-shadow: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0;
+    }
+    
+    main {
+        max-width: 960px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .slider {
+      max-width: 800px;
+      height: 500px;
+      margin: 2rem auto;
+      overflow: hidden;
+      position: relative;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+    }
+
+    .slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .caption-overlay {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .slider-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+
+    .slider-controls button {
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .slider-controls button:hover {
+        background: rgba(0,0,0,0.8);
+    }
+
+    .slider-dots {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .slider-dots .dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      background: #555;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .slider-dots .dot.active {
+      background: var(--accent-gold);
+    }
+
+    .visit-callout {
+      text-align: center;
+      padding: 2rem;
+      margin-top: 2rem;
+      color: var(--text-light);
+      background-color: var(--bg-dark-light);
+      border-radius: 12px;
+    }
+
+    .btn-visit {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--accent-gold);
+      color: #000;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .btn-visit:hover {
+      background-color: #c49c2d;
+    }
+
+    footer {
+        background-color: #0a0a0a;
+        color: var(--text-muted);
+        padding: 3rem 1rem 1.5rem;
+        margin-top: 3rem;
+        border-top: 1px solid var(--border-color);
+    }
+    .footer-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+    .footer-logo img {
+        width: 150px;
+        margin-bottom: 1rem;
+    }
+    .social-icons {
+        display: flex;
+        gap: 1rem;
+    }
+    .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: var(--bg-dark-light);
+        border-radius: 50%;
+        border: 1px solid var(--border-color);
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+    .social-icons svg {
+        fill: var(--text-light);
+        width: 20px;
+        height: 20px;
+        transition: fill 0.3s;
+    }
+    .social-icons a:hover {
+        background-color: var(--accent-gold);
+        border-color: var(--accent-gold);
+    }
+    .social-icons a:hover svg {
+        fill: #000;
+    }
+    .footer-column h4 {
+        color: var(--text-light);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .footer-column ul li {
+        margin-bottom: 0.5rem;
+    }
+    .footer-column ul a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .footer-column ul a:hover {
+        color: var(--accent-gold);
+    }
+    .newsletter-form {
+        position: relative;
+    }
+    .newsletter-form input {
+        width: 100%;
+        padding: 0.8rem 1rem 0.8rem 2.8rem;
+        border-radius: 2rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        font-size: 1rem;
+    }
+    .newsletter-form svg {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        fill: var(--text-muted);
+    }
+    .footer-copyright {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="index.html">Home</a>
+    <a href="food-info.html">Food Info</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html" class="active">Gallery</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <span class="hamburger" onclick="openNav()">☰</span>
+
+  <div id="main-content">
+    <div class="logo-container">
+      <img src="images/Cafe De Lune.jpg" alt="Café de Lune Logo">
+    </div>
+    <header>
+      <h1>Photo Gallery</h1>
+    </header>
+
+    <main>
+      <section class="slider">
+       <div class="slider-track" id="slider-track">
+        <div class="slide">
+          <div class="image-wrapper">
+            <a href="images/Exterior.png" data-lightbox="cafe-gallery" data-title="Cafe Exterior">
+              <img src="images/Exterior.png" alt="Cafe Exterior">
+            </a>
+            <div class="caption-overlay">Cafe Exterior</div>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="image-wrapper">
+            <a href="images/Interior.png" data-lightbox="cafe-gallery" data-title="Cafe Interior">
+              <img src="images/Interior.png" alt="Cafe Interior">
+            </a>
+            <div class="caption-overlay">Cafe Interior</div>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="image-wrapper">
+            <a href="images/BTS.png" data-lightbox="cafe-gallery" data-title="Barista at Work">
+              <img src="images/BTS.png" alt="Barista at Work">
+            </a>
+            <div class="caption-overlay">Behind the Scenes</div>
+          </div>
+        </div>
+      </div>
+
+        <div class="slider-controls">
+          <button onclick="prevSlide()">&#10094;</button>
+          <button onclick="nextSlide()">&#10095;</button>
+        </div>
+        <div class="slider-dots" id="slider-dots"></div>
+      </section>
+
+      <section class="visit-callout">
+       <h3>Want to experience it in person?</h3>
+       <p>Visit us at Café de Lune and enjoy a magical atmosphere under the moonlight.</p>
+       <a href="contact.html" class="btn-visit">Get Directions</a>
+     </section>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-column">
+          <div class="footer-logo">
+            <img src="images/Cafe De Lune.jpg" alt="Café de Lune Logo">
+          </div>
+          <div class="social-icons">
+            <a href="https://instagram.com/cafedelune" target="_blank" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100082880822678" target="_blank" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
+            </a>
+            <a href="#" target="_blank" aria-label="Twitter">
+              <svg viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.223.085c.645 1.956 2.523 3.375 4.752 3.411a9.882 9.882 0 01-6.117 2.107c-.397 0-.79-.023-1.175-.068a13.963 13.963 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.213 0-.425-.015-.637a9.935 9.935 0 002.46-2.548z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="food-info.html">Food Info</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Newsletter</h4>
+          <p>Stay updated with our latest dishes and offers.</p>
+          <form class="newsletter-form">
+            <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+            <input type="email" placeholder="Enter your email">
+          </form>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        &copy; <span id="copyright-year"></span> Café de Lune. All Rights Reserved.
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js"></script>
+  <script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "280px";
+        document.getElementById("main-content").style.marginLeft = "280px";
+        document.getElementById("main-content").style.opacity = "0.4";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main-content").style.marginLeft = "0";
+        document.getElementById("main-content").style.opacity = "1";
+    }
+
+    let current = 0;
+    const sliderTrack = document.getElementById("slider-track");
+    const slides = document.querySelectorAll(".slide");
+    const totalSlides = slides.length;
+
+    const dotsContainer = document.getElementById("slider-dots");
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement("span");
+      dot.classList.add("dot");
+      dot.addEventListener("click", () => {
+        current = i;
+        showSlide(current);
+      });
+      dotsContainer.appendChild(dot);
+    }
+
+    function updateDots() {
+      const dots = document.querySelectorAll(".slider-dots .dot");
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === current);
+      });
+    }
+
+    function showSlide(index) {
+      sliderTrack.style.transform = `translateX(-${index * 100}%)`;
+      updateDots();
+    }
+
+    function nextSlide() {
+      current = (current + 1) % totalSlides;
+      showSlide(current);
+    }
+
+    function prevSlide() {
+      current = (current - 1 + totalSlides) % totalSlides;
+      showSlide(current);
+    }
+
+    setInterval(nextSlide, 5000);
+    showSlide(current); 
+    
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

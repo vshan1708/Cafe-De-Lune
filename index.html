@@ -1,0 +1,436 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Café de Lune - Where Every Cup Tells a Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --bg-dark-light: #1a1a1a;
+      --text-light: #f5f5f5;
+      --accent-gold: #d4af37;
+      --text-muted: #bbb;
+      --border-color: #333;
+      --shadow-light: rgba(212, 175, 55, 0.2);
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        background-color: rgba(10, 10, 10, 0.98);
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        text-align: center;
+    }
+    .sidenav a {
+        padding: 15px 8px 15px 32px;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-family: 'Montserrat', sans-serif;
+        color: var(--text-muted);
+        display: block;
+        transition: 0.3s;
+    }
+    .sidenav a:hover, .sidenav a.active {
+        color: var(--accent-gold);
+    }
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+    #main-content {
+        transition: margin-left .5s, opacity .5s;
+    }
+    .hamburger {
+        font-size: 2.5rem;
+        cursor: pointer;
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 1001;
+        color: var(--accent-gold);
+        background: none;
+        border: none;
+        transition: color 0.3s;
+    }
+    .hamburger:hover {
+        color: white;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem 0;
+      background-color: #0a0a0a;
+    }
+    .logo-container img {
+      width: 220px;
+      height: auto;
+      filter: drop-shadow(0 0 4px var(--accent-gold));
+      border-radius: 15px;
+    }
+
+    .hero-home {
+      position: relative;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      background-image: url('images/Interior.png');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-home::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5); 
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 1rem;
+    }
+    .hero-home h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      color: var(--accent-gold);
+      text-shadow: 0 0 15px var(--accent-gold);
+      margin: 0;
+    }
+    .hero-home p {
+      font-size: 1.5rem;
+      margin: 0.5rem 0 1.5rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .btn-menu {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background-color: var(--accent-gold);
+      color: #000;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-menu:hover {
+      background-color: #c49c2d;
+      transform: scale(1.05);
+    }
+
+    main section {
+      padding: 3rem 1rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--accent-gold);
+      text-align: center;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 8px var(--accent-gold);
+    }
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-top: -1rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .featured-item {
+      background: var(--bg-dark-light);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+    .featured-item:hover {
+      transform: translateY(-5px);
+    }
+    .featured-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    .featured-item p {
+      text-align: center;
+      padding: 1rem;
+      font-weight: bold;
+      font-family: 'Playfair Display', serif;
+      color: var(--accent-gold);
+      margin: 0;
+    }
+
+    .visit-us {
+      text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-home h1 {
+        font-size: 3rem;
+      }
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    footer {
+        background-color: #0a0a0a;
+        color: var(--text-muted);
+        padding: 3rem 1rem 1.5rem;
+        margin-top: 3rem;
+        border-top: 1px solid var(--border-color);
+    }
+    .footer-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+    .footer-logo img {
+        width: 150px;
+        margin-bottom: 1rem;
+    }
+    .social-icons {
+        display: flex;
+        gap: 1rem;
+    }
+    .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: var(--bg-dark-light);
+        border-radius: 50%;
+        border: 1px solid var(--border-color);
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+    .social-icons svg {
+        fill: var(--text-light);
+        width: 20px;
+        height: 20px;
+        transition: fill 0.3s;
+    }
+    .social-icons a:hover {
+        background-color: var(--accent-gold);
+        border-color: var(--accent-gold);
+    }
+    .social-icons a:hover svg {
+        fill: #000;
+    }
+    .footer-column h4 {
+        color: var(--text-light);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .footer-column ul li {
+        margin-bottom: 0.5rem;
+    }
+    .footer-column ul a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .footer-column ul a:hover {
+        color: var(--accent-gold);
+    }
+    .newsletter-form {
+        position: relative;
+    }
+    .newsletter-form input {
+        width: 100%;
+        padding: 0.8rem 1rem 0.8rem 2.8rem;
+        border-radius: 2rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        font-size: 1rem;
+    }
+    .newsletter-form svg {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        fill: var(--text-muted);
+    }
+    .footer-copyright {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="index.html" class="active">Home</a>
+    <a href="food-info.html">Food Info</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <span class="hamburger" onclick="openNav()">☰</span>
+
+  <div id="main-content">
+    <div class="logo-container">
+      <img src="images/Cafe De Lune.jpg" alt="Café de Lune Logo">
+    </div>
+
+    <main>
+      <section class="hero-home">
+        <div class="hero-content">
+          <h1>Café de Lune</h1>
+          <p>Where Every Cup Tells a Story</p>
+          <a href="menu.html" class="btn-menu">Explore Our Menu</a>
+        </div>
+      </section>
+
+     
+      <section class="intro">
+        <h2 class="section-title">An Escape Into the Moonlight</h2>
+        <p class="section-subtitle">
+          Inspired by quiet, moonlit nights, Café de Lune offers a serene escape in the heart of the city. We blend artisanal brews and delightful cuisine with a cozy, elegant atmosphere. Step in, savor the moment, and let us be your favorite late-night haven.
+        </p>
+      </section>
+
+      <section class="featured-items">
+        <h2 class="section-title">Our Signature Dishes</h2>
+        <div class="featured-grid">
+          <div class="featured-item">
+            <img src="images/Grilled Chicken Chop.jpg" alt="Grilled Chicken Chop">
+            <p>Grilled Chicken Chop</p>
+          </div>
+          <div class="featured-item">
+            <img src="images/Cheesecake (New York).jpg" alt="New York Cheesecake">
+            <p>New York Cheesecake</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="visit-us">
+          <h2 class="section-title">Come Say Hello</h2>
+          <p class="section-subtitle">We're open late for dreamers and creatives.</p>
+          <p><b>📍 Address:</b> Lot G-3A, Ground Floor, The LINC KL, Kuala Lumpur</p>
+          <p><b>⏰ Hours:</b> Mon–Fri: 7:30 PM – 4:00 AM | Sat–Sun: 8:30 PM – 4:00 AM</p>
+          <a href="contact.html" class="btn-menu">Get Directions</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-column">
+          <div class="footer-logo">
+            <img src="images/Cafe De Lune.jpg" alt="Café de Lune Logo">
+          </div>
+          <div class="social-icons">
+            <a href="https://instagram.com/cafedelune" target="_blank" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100082880822678" target="_blank" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
+            </a>
+            <a href="#" target="_blank" aria-label="Twitter">
+              <svg viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.223.085c.645 1.956 2.523 3.375 4.752 3.411a9.882 9.882 0 01-6.117 2.107c-.397 0-.79-.023-1.175-.068a13.963 13.963 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.213 0-.425-.015-.637a9.935 9.935 0 002.46-2.548z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="food-info.html">Food Info</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Newsletter</h4>
+          <p>Stay updated with our latest dishes and offers.</p>
+          <form class="newsletter-form">
+            <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+            <input type="email" placeholder="Enter your email">
+          </form>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        © <span id="copyright-year"></span> Café de Lune. All Rights Reserved.
+      </div>
+    </footer>
+  </div>
+  
+  <script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "280px";
+        document.getElementById("main-content").style.marginLeft = "280px";
+        document.getElementById("main-content").style.opacity = "0.4";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main-content").style.marginLeft = "0";
+        document.getElementById("main-content").style.opacity = "1";
+    }
+    
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
